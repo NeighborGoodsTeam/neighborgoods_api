@@ -6,20 +6,20 @@ class Business(models.Model):
   # define fields
   # https://docs.djangoproject.com/en/3.0/ref/models/fields/
   name = models.CharField(max_length=100)
-  description = models.TextField(max_length=1000)
+  description = models.TextField(max_length=1000, null=True)
   addressOne = models.CharField(max_length=100)
-  addressTwo = models.CharField(max_length=100)
+  addressTwo = models.CharField(max_length=100, null=True)
   city = models.CharField(max_length=100)
   state = models.CharField(max_length=100)
-  zipCode = models.IntegerField()
-  longitude = models.FloatField()
-  latitude = models.FloatField()
-  industry = models.CharField(max_length=100)
-  phone = models.IntegerField()
-  website = models.URLField(max_length=200)
+  zipCode = models.IntegerField(default=0)
+  longitude = models.FloatField(default=0.0)
+  latitude = models.FloatField(default=0.0)
+  industry = models.CharField(max_length=100, null=True)
+  phone = models.IntegerField(default=0)
+  website = models.URLField(max_length=200, null=True)
   email = models.EmailField(max_length=100)
-  # hours =
-  inventory = models.FileField(upload_to='user_directory_auth/')
+  # # hours =
+  inventory = models.FileField(upload_to='user_directory_auth/', null=True)
   owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE
@@ -27,15 +27,13 @@ class Business(models.Model):
 
   def __str__(self):
     # This must return a string
-    return f"The business named '{self.name}' is {self.color} in color. It is {self.ripe} that it is ripe."
+    return f"The business named {self.name}"
 
   def as_dict(self):
     """Returns dictionary version of Business models"""
     return {
         'id': self.id,
         'name': self.name,
-        'ripe': self.ripe,
-        'color': self.color
     }
 
   # def user_directory_path(instance, filename):
