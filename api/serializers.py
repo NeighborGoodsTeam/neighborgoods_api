@@ -1,13 +1,29 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models.mango import Mango
+from .models.mango import Business
 from .models.user import User
 
-class MangoSerializer(serializers.ModelSerializer):
+class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Mango
-        fields = ('id', 'name', 'color', 'ripe', 'owner')
+        model = Business
+        fields = (
+          'id',
+          'name',
+          'description',
+          'addressOne',
+          'addressTwo',
+          'city',
+          'state',
+          'zipCode',
+          'longitude',
+          'latitude',
+          'industry',
+          'phone',
+          'website',
+          'email',
+          'inventory',
+          'owner')
 
 class UserSerializer(serializers.ModelSerializer):
     # This model serializer will be used for User creation
@@ -26,6 +42,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserRegisterSerializer(serializers.Serializer):
     # Require email, password, and password_confirmation for sign up
+    firstName = serializers.CharField(max_length=300, required=True)
+    lastName = serializers.CharField(max_length=300, required=True)
     email = serializers.CharField(max_length=300, required=True)
     password = serializers.CharField(required=True)
     password_confirmation = serializers.CharField(required=True, write_only=True)
