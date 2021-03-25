@@ -1,10 +1,11 @@
 from django.urls import path
-from .views.business_views import Businesses, BusinessDetail
+from .views.business_views import Businesses, CreateBusiness, BusinessDetail
 from .views.user_views import SignUp, SignIn, SignOut, ChangePassword
 
 urlpatterns = [
   	# Restful routing
     path('businesses/', Businesses.as_view(), name='businesses'),
+    path('create-business/', CreateBusiness.as_view(), name='businesses'),
     path('business/<int:pk>/', BusinessDetail.as_view(), name='business_detail'),
     path('sign-up/', SignUp.as_view(), name='sign-up'),
     path('sign-in/', SignIn.as_view(), name='sign-in'),

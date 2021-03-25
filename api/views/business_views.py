@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.exceptions import PermissionDenied
 from rest_framework import generics, status
 from django.shortcuts import get_object_or_404
@@ -12,18 +12,21 @@ from ..serializers import BusinessSerializer, UserSerializer
 
 # Create your views here.
 class Businesses(generics.ListCreateAPIView):
-    permission_classes=(IsAuthenticated,)
+    permission_classes=(AllowAny,)
     serializer_class = BusinessSerializer
     def get(self, request):
         """Index request"""
         # Get all the businesses:
-        # businesses = Business.objects.all()
+        businesses = Business.objects.all()
         # Filter the businesses by owner, so you can only see your owned businesses
-        businesses = Business.objects.filter(owner=request.user.id)
+        # businesses = Business.objects.filter(owner=request.user.id)
         # Run the data through the serializer
         data = BusinessSerializer(businesses, many=True).data
         return Response({ 'businesses': data })
 
+class CreateBusiness(generics.ListCreateAPIView):
+    permission_classes=(IsAuthenticated,)
+    serializer_class = BusinessSerializer
     def post(self, request):
         """Create request"""
         # Add user to request data object
