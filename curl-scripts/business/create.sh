@@ -1,6 +1,6 @@
 #!/bin/bash
 
-curl "http://localhost:8000/businesses/" \
+curl "http://localhost:8000/create-business/" \
   --include \
   --request POST \
   --header "Content-Type: application/json" \

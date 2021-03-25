@@ -24,6 +24,19 @@ class Businesses(generics.ListCreateAPIView):
         data = BusinessSerializer(businesses, many=True).data
         return Response({ 'businesses': data })
 
+class MyBusiness(generics.ListCreateAPIView):
+    permission_classes=(IsAuthenticated,)
+    serializer_class = BusinessSerializer
+    def get(self, request):
+        """Index request"""
+        # Get all the businesses:
+        # businesses = Business.objects.all()
+        # Filter the businesses by owner, so you can only see your owned businesses
+        businesses = Business.objects.filter(owner=request.user.id)
+        # Run the data through the serializer
+        data = BusinessSerializer(businesses, many=True).data
+        return Response({ 'businesses': data })
+
 class CreateBusiness(generics.ListCreateAPIView):
     permission_classes=(IsAuthenticated,)
     serializer_class = BusinessSerializer
