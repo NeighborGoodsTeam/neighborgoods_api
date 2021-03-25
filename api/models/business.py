@@ -15,11 +15,11 @@ class Business(models.Model):
   longitude = models.FloatField(default=0.0)
   latitude = models.FloatField(default=0.0)
   industry = models.CharField(max_length=100, null=True)
-  phone = models.IntegerField(default=0)
+  phone = models.CharField(max_length=20, default=0)
   website = models.URLField(max_length=200, null=True)
   email = models.EmailField(max_length=100)
   # # hours =
-  inventory = models.FileField(upload_to='user_directory_auth/', null=True)
+  inventory = models.TextField(max_length=2000, null=True)
   owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE
