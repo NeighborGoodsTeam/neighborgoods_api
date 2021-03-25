@@ -22,6 +22,7 @@ class BusinessSerializer(serializers.ModelSerializer):
           'phone',
           'website',
           'email',
+          'logo',
           'inventory',
           'owner')
 
